@@ -17,7 +17,7 @@ pkgver(){
 
 package() {
   rm $srcdir/$_moddir
-  mkdir -p $pkgdir/var/lib/shinken/{modules,inventory}/
+  mkdir -p $pkgdir/var/lib/shinken/{retention,modules,inventory}/
   mkdir -p $pkgdir/var/lib/shinken/inventory/$_moddir
   cd $srcdir
   chmod -R o-rwx .
@@ -32,8 +32,9 @@ package() {
   mv module $pkgdir/var/lib/shinken/modules/$_moddir
   mv package.json $pkgdir/var/lib/shinken/inventory/$_moddir
   mkdir -p $pkgdir/etc/shinken/modules/
-  mv etc/modules/$_moddir.cfg $pkgdir/etc/shinken/modules/
-  chmod 0640 $pkgdir/etc/shinken/modules/$_moddir.cfg
+  sed -i 's:/tmp/:/var/lib/shinken/retention/:' $pkgdir/etc/modules/*
+  mv etc/modules/* $pkgdir/etc/shinken/modules/
+  chmod 0640 $pkgdir/etc/shinken/modules/*
 }
 
 # vim:set ts=2 sw=2 et:
