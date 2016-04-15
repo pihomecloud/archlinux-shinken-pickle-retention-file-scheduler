@@ -29,11 +29,11 @@ package() {
     LANG=C stat $fic --printf='{"size":"%s", "type":"%t", "name":"%n", "mode","'$mode8'"},'
   done > $pkgdir/var/lib/shinken/inventory/$_moddir/content.json
   sed -i 's/^\(.*\),$/[\1]/' $pkgdir/var/lib/shinken/inventory/$_moddir/content.json
-  mv module $pkgdir/var/lib/shinken/modules/$_moddir
-  mv package.json $pkgdir/var/lib/shinken/inventory/$_moddir
+  mv $srcdir/module $pkgdir/var/lib/shinken/modules/$_moddir
+  mv $srcdir/package.json $pkgdir/var/lib/shinken/inventory/$_moddir
   mkdir -p $pkgdir/etc/shinken/modules/
-  sed -i 's:/tmp/:/var/lib/shinken/retention/:' $pkgdir/etc/modules/*
-  mv etc/modules/* $pkgdir/etc/shinken/modules/
+  mv $srcdir/etc/modules/* $pkgdir/etc/shinken/modules/
+  sed -i 's:/tmp/:/var/lib/shinken/retention/:' $pkgdir/etc/shinken/modules/*
   chmod 0640 $pkgdir/etc/shinken/modules/*
 }
 
